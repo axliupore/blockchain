@@ -17,8 +17,10 @@ func TestNewBlock(t *testing.T) {
 func TestValidChain(t *testing.T) {
 	b := New()
 	var blocks []*Block
-	for i := 0; i < 10; i++ {
-		block := b.NewBlock(i, "")
+	blocks = append(blocks, b.Chain[0])
+	for i := 0; i < 4; i++ {
+		lastBlock := b.LastBlock()
+		block := b.NewBlock(b.Pow(lastBlock), Hash(lastBlock))
 		blocks = append(blocks, block)
 	}
 	if b.ValidChain(blocks) {

@@ -2,7 +2,6 @@ package core
 
 import (
 	"encoding/json"
-	"fmt"
 	mapset "github.com/deckarep/golang-set"
 	"net/http"
 	"time"
@@ -68,7 +67,6 @@ func (b *BlockChain) ValidChain(chain []*Block) bool {
 
 	for currentIndex < len(chain) { // 遍历整个链
 		block := chain[currentIndex]
-		fmt.Println(lastBlock, block)
 
 		// 检查前一个区块的哈希值是否等于当前区块中记录的前一个区块的哈希值
 		if block.PreviousHash != Hash(lastBlock) {
@@ -76,7 +74,7 @@ func (b *BlockChain) ValidChain(chain []*Block) bool {
 		}
 
 		// 检查工作量证明的合法性
-		if !b.ValidProof(lastBlock.Proof, block.Proof, lastBlock.PreviousHash) {
+		if !b.ValidProof(lastBlock.Proof, block.Proof, block.PreviousHash) {
 			return false
 		}
 
